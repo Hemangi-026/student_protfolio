@@ -1,29 +1,34 @@
-import NavBar from "./components/NavBar";
-import Header from "./components/Header";
-import About from "./components/About";
-import Skills from "./components/Skills";
-import Footer from "./components/Footer";
-import "./App.css";
+import { useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import NavBar from './components/navbar';
+import Home from './pages/home';
+import Projects from './pages/projects';
+import Contact from './pages/contact';
+import NotFound from './pages/notfound';
+import './App.css';
 
-const skillList = [
-  "JavaScript",
-  "React",
-  "HTML & CSS",
-  "Node.js",
-  "Git & GitHub",
-  "SQL",
-];
-
+// NOTE: wrap <App /> in <BrowserRouter> once, in main.jsx — not here.
 function App() {
+  // Supplementary requirement: dark/light mode toggle applied to the root element
+  const [darkMode, setDarkMode] = useState(false);
+
   return (
-    <div className="app">
-      <NavBar />
-      <Header name="Hemangi Parmar" themeColor="#4ecca3" />
-      <main>
-        <About />
-        <Skills skillList={skillList} />
+    <div className={darkMode ? 'app dark' : 'app light'}>
+      <NavBar darkMode={darkMode} setDarkMode={setDarkMode} />
+
+      <main className="app-content">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/projects" element={<Projects />} />
+          <Route path="/contact" element={<Contact />} />
+          {/* Catch-all 404 route must stay last */}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
       </main>
-      <Footer />
+
+      <footer className="app-footer">
+        <p>&copy; {new Date().getFullYear()} Jane Doe — built with React Router.</p>
+      </footer>
     </div>
   );
 }

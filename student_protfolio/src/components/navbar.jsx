@@ -1,44 +1,44 @@
-import { useEffect, useState } from "react";
+import { Link, NavLink } from 'react-router-dom';
 
-const SECTIONS = ["about", "skills", "footer"];
-
-function NavBar() {
-  const [active, setActive] = useState("about");
-
-  useEffect(() => {
-    const onScroll = () => {
-      const mid = window.scrollY + window.innerHeight / 3;
-
-      let current = SECTIONS[0];
-      for (const id of SECTIONS) {
-        const el = document.getElementById(id);
-        if (el && el.offsetTop <= mid) {
-          current = id;
-        }
-      }
-      setActive(current);
-    };
-
-    window.addEventListener("scroll", onScroll);
-    onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
+// NavBar receives dark mode state + setter as props from App.jsx
+// so the toggle button lives here but the state lives in App.
+function NavBar({ darkMode, setDarkMode }) {
   return (
     <nav className="navbar">
-      <span className="navbar__brand">~/portfolio</span>
-      <ul className="navbar__links">
-        {SECTIONS.map((id) => (
-          <li key={id}>
-            <a
-              href={`#${id}`}
-              className={active === id ? "navbar__link navbar__link--active" : "navbar__link"}
-            >
-              {id}
-            </a>
-          </li>
-        ))}
-      </ul>
+      <Link to="/" className="navbar-brand">
+        Portfolio
+      </Link>
+
+      <div className="navbar-links">
+        {/* Using <Link> / <NavLink> instead of <a> avoids full page reloads */}
+        <NavLink
+          to="/"
+          className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}
+          end
+        >
+          Home
+        </NavLink>
+        <NavLink
+          to="/projects"
+          className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}
+        >
+          Projects
+        </NavLink>
+        <NavLink
+          to="/contact"
+          className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}
+        >
+          Contact
+        </NavLink>
+      </div>
+
+      <button
+        className="theme-toggle"
+        onClick={() => setDarkMode(!darkMode)}
+        aria-label="Toggle dark and light mode"
+      >
+        {darkMode ? '☀️ Light' : '🌙 Dark'}
+      </button>
     </nav>
   );
 }
