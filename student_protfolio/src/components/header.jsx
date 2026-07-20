@@ -1,18 +1,17 @@
-import React from "react";
-
-function Header() {
-    const [count, setCount] = React.useState(0);
-
-    return (
-        <header>
-            <h1>Hemangi Parmar</h1>
-            <p>Welcome to My Portfolio</p>
-            <p>This is a simple header component.</p>
-            <button onClick={() => setCount(count + 1)}>
-                Count is {count}
-            </button>
-        </header>
-    );
+function Header({ name, themeColor }) {
+  return (
+    <header className="header">
+      <p className="header__eyebrow" style={{ color: themeColor }}>
+        {"// student developer"}
+      </p>
+      <h1 className="header__name" style={{ borderColor: themeColor }}>
+        {name}
+      </h1>
+      <p className="header__tagline">
+        Building things, breaking things, fixing things, repeat.
+      </p>
+    </header>
+  );
 }
 
 export default Header;

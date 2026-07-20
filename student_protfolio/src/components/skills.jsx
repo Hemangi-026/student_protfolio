@@ -1,20 +1,16 @@
-import React from "react";
-
-function Skills() {
-    return (
-        <section>
-            <h2>Skills</h2>
-            <ul>
-                <li>HTML</li>
-                <li>CSS</li>
-                <li>JavaScript</li>
-                <li>Python</li>
-                <li>React</li>
-                <li>Node.js</li>
-
-            </ul>
-        </section>
-    );
+function Skills({ skillList }) {
+  return (
+    <section id="skills" className="skills">
+      <h2 className="section__heading">02. skills</h2>
+      <ul className="skills__list">
+        {skillList.map((skill) => (
+          <li key={skill} className="skills__item">
+            {skill}
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
 }
 
 export default Skills;
